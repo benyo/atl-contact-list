@@ -1,0 +1,23 @@
+<h1 mat-dialog-title>{{ isEditContact ? 'Editar' : 'Crear nuevo'}} contacto</h1>
+
+<div mat-dialog-content>
+  <form [formGroup]="contactForm" class="contact-form">
+        <mat-form-field class="contact-full-width">
+            <input matInput placeholder="Avatar url" formControlName="avatar">
+        </mat-form-field>
+        <mat-form-field class="contact-full-width">
+            <input matInput placeholder="Nombre" formControlName="name">
+        </mat-form-field>
+        <mat-form-field class="contact-full-width">
+            <input matInput placeholder="email" formControlName="email">
+        </mat-form-field>
+        <mat-form-field class="contact-full-width">
+            <input matInput mask="(000) 000-0000"  placeholder="Telefono" formControlName="phone">
+        </mat-form-field>
+  </form>
+</div>
+
+<div mat-dialog-actions>
+  <button mat-button (click)="cancel()">Cancelar</button>
+  <button mat-button cdkFocusInitial [disabled]="contactForm.invalid || !contactForm.dirty" (click)="submit($event)">{{ isEditContact ? 'Editar' : 'Añadir'}}</button>
+</div>

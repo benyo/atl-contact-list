@@ -1,0 +1,45 @@
+<div class="container">
+    <mat-card>
+            <mat-card-title>
+                    
+                <button mat-raised-button (click)="newContact($event)">Nuevo contacto</button>
+                        
+            </mat-card-title>
+        <mat-card-content>
+            <div class="contact-list-container">
+
+                    <div class="contact-list-search">
+                        <mat-form-field class="full-width">
+                            <input matInput type="text" placeholder="Buscar contactos" [(ngModel)]="filterTerm">
+                            <mat-icon matSuffix>search</mat-icon>
+                            <mat-hint align="start"><strong>Total de contactos: </strong> </mat-hint>
+                            <mat-hint align="end">{{ (contactService.listContacts | async).length }}</mat-hint>
+                        </mat-form-field>
+                    </div>
+                    <div class="contact-list">
+                        {{filterTerm}}
+                        <mat-list>
+                            <mat-list-item *ngFor="let contact of (contactService.listContacts | contactFilter: filterTerm) | async">
+                                    <img matListAvatar src="{{contact.avatar}}" alt="{{contact.first_name}}">
+                                    <h3 matLine> {{contact.name}}</h3>
+                                    <p matLine>
+                                        <span> {{contact.email}} </span>
+                                        <span class="demo-2"> -- {{contact.phone}} </span>
+                                    </p>
+                                    
+                                    <button mat-icon-button [matMenuTriggerFor]="belowMenu">
+                                        <mat-icon matListIcon>more_vert</mat-icon>
+                                    </button>
+                                    <mat-menu #belowMenu="matMenu" yPosition="below">
+                                      <button mat-menu-item (click)="editContact(contact)"><mat-icon matListIcon>edit</mat-icon> Editar</button>
+                                      <button mat-menu-item (click)="deleteContact(contact)"><mat-icon matListIcon>delete_forever</mat-icon> Eliminar</button>
+                                    </mat-menu>
+                                <mat-divider *ngIf="!last"></mat-divider>
+                            </mat-list-item>
+                        </mat-list>
+                    </div>
+            </div>
+        </mat-card-content>
+    </mat-card>
+</div>
+
